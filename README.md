@@ -4,7 +4,7 @@ Cool chat app to contribute and communicate with each other.
 
 ## Latest Announcements 📢
 
-🔴 The PRs made in this repo will not be considered for the official Hacktoberfest (conducted by Digitalocean).
+🔴 The PRs made in this repo will be considered for the official Hacktoberfest (conducted by Digitalocean).
 
 ## Contribution Guidelines
 
