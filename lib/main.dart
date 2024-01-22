@@ -11,13 +11,13 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
-  await FirebaseAppCheck.instance.activate(
-    webRecaptchaSiteKey: 'recaptcha-v3-site-key',
-    androidProvider: AndroidProvider.debug,
-    appleProvider: AppleProvider.appAttest,
-  );
+  // await FirebaseAppCheck.instance.activate(
+  //   androidProvider: AndroidProvider.debug,
+  //   appleProvider: AppleProvider.appAttest,
+  // );
   runApp(
     MaterialApp(
+      themeMode: ThemeMode.system,
       home: AuthService().handleAuthState(),
     ),
   );

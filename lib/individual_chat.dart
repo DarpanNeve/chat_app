@@ -9,12 +9,12 @@ class IndividualChat extends StatelessWidget {
 
   final Map<String, dynamic> userMap;
   final TextEditingController _message = TextEditingController();
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseFirestore _fireStore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   void sendMessage() async {
     if (_message.text.isNotEmpty) {
-      await _firestore
+      await _fireStore
           .collection('chatroom')
           .doc(roomId)
           .collection('chats')
@@ -25,7 +25,6 @@ class IndividualChat extends StatelessWidget {
           "time": FieldValue.serverTimestamp(),
         },
       );
-      print("message sent");
       _message.clear();
     }
   }
@@ -37,7 +36,7 @@ class IndividualChat extends StatelessWidget {
         title: Text(userMap['name']),
       ),
       body: StreamBuilder<QuerySnapshot>(
-        stream: _firestore
+        stream: _fireStore
             .collection('chatroom')
             .doc(roomId)
             .collection('chats')
@@ -49,10 +48,8 @@ class IndividualChat extends StatelessWidget {
               itemCount: snapshot.data!.docs.length,
               itemBuilder: (BuildContext context, int index) {
                 if (snapshot.data!.docs[index].data() == null) {
-                  print("data is null");
                   return Container();
                 }
-                print("data is present");
                 return GestureDetector(
                   child: Container(
                     width: 300,
@@ -125,8 +122,4 @@ class IndividualChat extends StatelessWidget {
       ),
     );
   }
-}
-
-deleteMessage(String time) {
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 }

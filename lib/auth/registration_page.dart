@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 
 import '../auth_service.dart';
 import 'login_page.dart';
+
 var _confirmPass = TextEditingController();
 var _pass = TextEditingController();
 var _email = TextEditingController();
 var _name = TextEditingController();
 
 class RegistrationPage extends StatelessWidget {
-   RegistrationPage({super.key});
+  RegistrationPage({super.key});
+
   bool passEncrypted = true;
 
   //Color customColor = Color(0x00d9d9d9);
@@ -46,8 +48,10 @@ class RegistrationPage extends StatelessWidget {
                           children: [
                             Text(
                               'REGISTRATION ',
-                              style: TextStyle(fontSize: 16,
-                                  fontWeight: FontWeight.bold, color: Colors.black),
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black),
                             ),
                           ],
                         ),
@@ -90,22 +94,20 @@ class RegistrationPage extends StatelessWidget {
                       ),
                       const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text('OR',style: TextStyle( ))
-                        ],
+                        children: [Text('OR', style: TextStyle())],
                       ),
                       const SizedBox(
                         height: 4,
                       ),
-
                       GestureDetector(
                         onTap: () async {
-                          if(_pass.text==_confirmPass.text && _name.text.isNotEmpty && _email.text.isNotEmpty ){
-                            await AuthService().createUserWithEmailAndPassword(_name.text,_email.text,_pass.text,context);
-                            print(_name.text);
-                            Navigator.pop(context);
-                          }
-                          else{
+                          if (_pass.text == _confirmPass.text &&
+                              _name.text.isNotEmpty &&
+                              _email.text.isNotEmpty) {
+                            await AuthService().createUserWithEmailAndPassword(
+                                _name.text, _email.text, _pass.text, context);
+                            if (context.mounted) Navigator.pop(context);
+                          } else {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
                                 content: Text('password do not match'),
@@ -124,8 +126,14 @@ class RegistrationPage extends StatelessWidget {
                           child: const Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text("Register",style: TextStyle(fontSize: 16, // Set the text size
-                                  fontWeight: FontWeight.bold,color: Colors.white),),
+                              Text(
+                                "Register",
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    // Set the text size
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white),
+                              ),
                             ],
                           ),
                         ),
@@ -135,11 +143,16 @@ class RegistrationPage extends StatelessWidget {
                       ),
                       const Text("Already Have An Account ? "),
                       GestureDetector(
-                          onTap: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=> const LoginPage()));
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const LoginPage()));
                           },
-                          child: const Text(" Login ",style: TextStyle(color: Colors.lightBlue),)),
-
+                          child: const Text(
+                            " Login ",
+                            style: TextStyle(color: Colors.lightBlue),
+                          )),
                     ],
                   ),
                 ),
@@ -151,6 +164,7 @@ class RegistrationPage extends StatelessWidget {
     );
   }
 }
+
 class PasswordButton1 extends StatefulWidget {
   const PasswordButton1({super.key});
 
@@ -159,30 +173,29 @@ class PasswordButton1 extends StatefulWidget {
 }
 
 class _PasswordButton1State extends State<PasswordButton1> {
-  bool obsecureText = true;
+  bool obSecureText = true;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(12.0),
       child: TextField(
         controller: _pass,
-        obscureText: obsecureText,
+        obscureText: obSecureText,
         decoration: InputDecoration(
           hintText: 'Password',
           prefixIcon: const Icon(Icons.lock),
           suffixIcon: GestureDetector(
               onTap: () {
                 setState(
-                      () {
-                    obsecureText = !obsecureText;
+                  () {
+                    obSecureText = !obSecureText;
                   },
                 );
               },
-              child: obsecureText
-                  ? const Icon(Icons.visibility_off,
-                  color: Colors.grey)
-                  : const Icon(Icons.visibility,
-                  color: Colors.grey)),
+              child: obSecureText
+                  ? const Icon(Icons.visibility_off, color: Colors.grey)
+                  : const Icon(Icons.visibility, color: Colors.grey)),
         ),
         keyboardType: TextInputType.emailAddress,
       ),
@@ -198,43 +211,42 @@ class PasswordButton2 extends StatefulWidget {
 }
 
 class _PasswordButton2State extends State<PasswordButton2> {
-  bool obsecureText = true;
+  bool obSecureText = true;
+
   @override
   void dispose() {
-    _name.text="";
-    _email.text="";
-    _pass.text="";
-    _confirmPass.text="";
+    _name.text = "";
+    _email.text = "";
+    _pass.text = "";
+    _confirmPass.text = "";
     // TODO: implement dispose
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(12.0),
       child: TextField(
         controller: _confirmPass,
-        obscureText: obsecureText,
+        obscureText: obSecureText,
         decoration: InputDecoration(
           hintText: 'Password',
           prefixIcon: const Icon(Icons.lock),
           suffixIcon: GestureDetector(
               onTap: () {
                 setState(
-                      () {
-                    obsecureText = !obsecureText;
+                  () {
+                    obSecureText = !obSecureText;
                   },
                 );
               },
-              child: obsecureText
-                  ? const Icon(Icons.visibility_off,
-                  color: Colors.grey)
-                  : const Icon(Icons.visibility,
-                  color: Colors.grey)),
+              child: obSecureText
+                  ? const Icon(Icons.visibility_off, color: Colors.grey)
+                  : const Icon(Icons.visibility, color: Colors.grey)),
         ),
         keyboardType: TextInputType.emailAddress,
       ),
     );
   }
 }
-

@@ -1,14 +1,11 @@
-import 'dart:html';
-
 import 'package:chat_app/auth_service.dart';
 import 'package:chat_app/individual_chat.dart';
-import 'package:chat_app/widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class ChatList extends StatefulWidget {
-  const ChatList({Key? key}) : super(key: key);
+  const ChatList({super.key});
 
   @override
   State<ChatList> createState() => _ChatListState();
@@ -20,6 +17,7 @@ class _ChatListState extends State<ChatList> with WidgetsBindingObserver {
   List<Map<String, dynamic>> allUsers = [];
   final _search = TextEditingController();
   late String roomId;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -29,12 +27,13 @@ class _ChatListState extends State<ChatList> with WidgetsBindingObserver {
   }
 
   @override
-  void dispose(){
+  void dispose() {
     // TODO: implement dispose
-setStatus("offline");
+    setStatus("offline");
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
+
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     super.didChangeAppLifecycleState(state);
@@ -46,15 +45,17 @@ setStatus("offline");
       await setStatus("paused");
     }
   }
+
   setStatus(String status) async {
-    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    FirebaseFirestore fireStore = FirebaseFirestore.instance;
     FirebaseAuth auth = FirebaseAuth.instance;
-    await firestore.collection('users').doc(auth.currentUser!.uid).update(
+    await fireStore.collection('users').doc(auth.currentUser!.uid).update(
       {
         "status": status,
       },
     );
   }
+
   String chatRoomId(String? user1, String user2) {
     if (user1!.toLowerCase().codeUnits[0] > user2.toLowerCase().codeUnits[0]) {
       return "$user1$user2";
@@ -62,9 +63,10 @@ setStatus("offline");
       return "$user2$user1";
     }
   }
+
   void search() async {
-    FirebaseFirestore firestore = FirebaseFirestore.instance;
-    QuerySnapshot querySnapshot = await firestore
+    FirebaseFirestore fireStore = FirebaseFirestore.instance;
+    QuerySnapshot querySnapshot = await fireStore
         .collection("users")
         .where("name", isEqualTo: _search.text)
         .get();
@@ -75,13 +77,11 @@ setStatus("offline");
     setState(() {
       allUsers = foundUsers;
     });
-
-    print(allUsers);
   }
 
   void fetchAllUsers() async {
-    FirebaseFirestore firestore = FirebaseFirestore.instance;
-    QuerySnapshot querySnapshot = await firestore
+    FirebaseFirestore fireStore = FirebaseFirestore.instance;
+    QuerySnapshot querySnapshot = await fireStore
         .collection("users")
         .where("email", isNotEqualTo: _user!.email)
         .get();
@@ -92,93 +92,94 @@ setStatus("offline");
     setState(() {
       allUsers = fetchedUsers;
     });
-
-    print(allUsers);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("Users List"),
-          actions: <Widget>[
-            IconButton(
-              onPressed: () {
-                AuthService().signOut(context);
-              },
-              icon: const Icon(Icons.logout),
+      appBar: AppBar(
+        title: const Text("Users List"),
+        actions: <Widget>[
+          IconButton(
+            onPressed: () {
+              AuthService().signOut(context);
+            },
+            icon: const Icon(Icons.logout),
+          ),
+        ],
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            const SizedBox(height: 25),
+            Container(
+              width: 300,
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.black),
+              ),
+              child: TextField(
+                controller: _search,
+                decoration: const InputDecoration(hintText: "Search"),
+              ),
             ),
-          ],
-        ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              const SizedBox(height: 25),
-              Container(
-                width: 300,
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black),
-                ),
-                child: TextField(
-                  controller: _search,
-                  decoration: const InputDecoration(hintText: "Search"),
-                ),
-              ),
-              const SizedBox(height: 25),
-              ElevatedButton(
-                onPressed: () {
-                  search();
-                },
-                child: const Text("Search User"),
-              ),
-              const SizedBox(height: 25),
-              ElevatedButton(
-                onPressed: () {
-                  fetchAllUsers();
-                },
-                child: const Text("Fetch All Users"),
-              ),
-              const SizedBox(height: 25),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: allUsers.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return SizedBox(
-                      width: 300,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: ListTile(
-                          leading: const Icon(Icons.person),
-                          tileColor: Colors.grey[200],
-                          title: Text(
-                              "${allUsers[index]["name"]}\n${allUsers[index]["email"]}"),
-                          subtitle: Text(allUsers[index]["status"]),
-                          trailing: ElevatedButton(
-                            onPressed: () {
-                              setState(() {
-                                roomId = chatRoomId(_user?.uid,
-                                    allUsers[index]["uId"]);
-                              });
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => IndividualChat(
-                                      roomId: roomId, userMap: allUsers[index]),
-                                ),
-                              );
+            const SizedBox(height: 25),
+            ElevatedButton(
+              onPressed: () {
+                search();
+              },
+              child: const Text("Search User"),
+            ),
+            const SizedBox(height: 25),
+            ElevatedButton(
+              onPressed: () {
+                fetchAllUsers();
+              },
+              child: const Text("Fetch All Users"),
+            ),
+            const SizedBox(height: 25),
+            Expanded(
+              child: ListView.builder(
+                itemCount: allUsers.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return SizedBox(
+                    width: 300,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(
+                            () {
+                              roomId = chatRoomId(
+                                  _user?.uid, allUsers[index]["uId"]);
                             },
-                            child: const Text("Chat"),
+                          );
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => IndividualChat(
+                                  roomId: roomId, userMap: allUsers[index]),
+                            ),
+                          );
+                        },
+                        child: Card(
+                          child: ListTile(
+                            leading: const Icon(Icons.person),
+                            tileColor: Colors.grey[200],
+                            title: Text(
+                                "${allUsers[index]["name"]}\n${allUsers[index]["email"]}"),
+                            subtitle: Text(allUsers[index]["status"]),
                           ),
                         ),
                       ),
-                    );
-                  },
-                ),
+                    ),
+                  );
+                },
               ),
-            ],
-          ),
+            ),
+          ],
         ),
+      ),
     );
   }
 }

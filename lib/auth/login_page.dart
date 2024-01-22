@@ -189,7 +189,7 @@ class PasswordButton extends StatefulWidget {
 
 class _PasswordButtonState extends State<PasswordButton> {
   bool passEncrypted = true;
-  bool obsecureText = true;
+  bool obSecureText = true;
 
   @override
   void dispose() {
@@ -205,7 +205,7 @@ class _PasswordButtonState extends State<PasswordButton> {
       padding: const EdgeInsets.all(12.0),
       child: TextField(
         controller: _pass,
-        obscureText: obsecureText,
+        obscureText: obSecureText,
         decoration: InputDecoration(
           hintText: 'Password',
           prefixIcon: const Icon(Icons.lock),
@@ -213,11 +213,11 @@ class _PasswordButtonState extends State<PasswordButton> {
               onTap: () {
                 setState(
                   () {
-                    obsecureText = !obsecureText;
+                    obSecureText = !obSecureText;
                   },
                 );
               },
-              child: obsecureText
+              child: obSecureText
                   ? const Icon(Icons.visibility_off, color: Colors.grey)
                   : const Icon(Icons.visibility, color: Colors.grey)),
         ),
