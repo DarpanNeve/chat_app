@@ -169,6 +169,7 @@ class _ChatListState extends State<ChatList> with WidgetsBindingObserver {
                             title: Text(
                                 "${allUsers[index]["name"]}\n${allUsers[index]["email"]}"),
                             subtitle: Text(allUsers[index]["status"]),
+                            trailing: const Icon(Icons.message)
                           ),
                         ),
                       ),
