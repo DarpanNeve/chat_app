@@ -87,7 +87,7 @@ class LoginPage extends StatelessWidget {
                       GestureDetector(
                         onTap: () {
                           AuthService().signInWithEmailAndPassword(
-                              _email.text, _pass.text,context);
+                              _email.text, _pass.text, context);
                         },
                         child: Container(
                           width: 202,

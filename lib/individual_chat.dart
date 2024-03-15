@@ -60,8 +60,8 @@ class IndividualChat extends StatelessWidget {
                     child: Container(
                       padding: const EdgeInsets.symmetric(
                           vertical: 10, horizontal: 14),
-                      margin:
-                          const EdgeInsets.symmetric(vertical: 5, horizontal: 8),
+                      margin: const EdgeInsets.symmetric(
+                          vertical: 5, horizontal: 8),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
                         color: Colors.blue,
@@ -76,7 +76,7 @@ class IndividualChat extends StatelessWidget {
                           ),
                           Text(
                             snapshot.data!.docs[index]['message'],
-                            textAlign: TextAlign.left ,
+                            textAlign: TextAlign.left,
                           ),
                         ],
                       ),

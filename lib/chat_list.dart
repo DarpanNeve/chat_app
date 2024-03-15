@@ -47,7 +47,6 @@ class _ChatListState extends State<ChatList> with WidgetsBindingObserver {
     }
   }
 
-
   setStatus(String status) async {
     FirebaseFirestore fireStore = FirebaseFirestore.instance;
     FirebaseAuth auth = FirebaseAuth.instance;

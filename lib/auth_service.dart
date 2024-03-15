@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'auth/login_page.dart';
+
 class AuthService {
   handleAuthState() {
     return StreamBuilder<User?>(
@@ -15,7 +16,7 @@ class AuthService {
           // Loading state while waiting for the auth state to be determined
           return const Center(child: CircularProgressIndicator());
         }
-        if (snapshot.hasData ) {
+        if (snapshot.hasData) {
           return const ChatList();
         } else {
           return const LoginPage();
@@ -91,7 +92,8 @@ class AuthService {
     }
   }
 
-  signInWithEmailAndPassword(String emailAddress, String password,BuildContext context) async {
+  signInWithEmailAndPassword(
+      String emailAddress, String password, BuildContext context) async {
     try {
       final credential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: emailAddress, password: password);
