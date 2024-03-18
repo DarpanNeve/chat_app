@@ -23,6 +23,7 @@ class _ChatListState extends State<ChatList> with WidgetsBindingObserver {
     // TODO: implement initState
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    print("object");
     setStatus("started");
   }
 
@@ -164,13 +165,12 @@ class _ChatListState extends State<ChatList> with WidgetsBindingObserver {
                         },
                         child: Card(
                           child: ListTile(
-                            leading: const Icon(Icons.person),
-                            tileColor: Colors.grey[200],
-                            title: Text(
-                                "${allUsers[index]["name"]}\n${allUsers[index]["email"]}"),
-                            subtitle: Text(allUsers[index]["status"]),
-                            trailing: const Icon(Icons.message)
-                          ),
+                              leading: const Icon(Icons.person),
+                              tileColor: Colors.grey[200],
+                              title: Text(
+                                  "${allUsers[index]["name"]}\n${allUsers[index]["email"]}"),
+                              subtitle: Text(allUsers[index]["status"]),
+                              trailing: const Icon(Icons.message)),
                         ),
                       ),
                     ),
